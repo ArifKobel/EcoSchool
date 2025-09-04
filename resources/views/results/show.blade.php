@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout class="results-page">
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Ihre BBNE-Ergebnisse') }}
@@ -9,7 +9,7 @@
         <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
             <!-- Status Badge und Gesamtergebnis -->
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg result-summary no-break">
                 <div class="p-6 lg:p-8 bg-white border-b border-gray-200">
                     <div class="text-center">
                         <div class="inline-flex items-center justify-center w-24 h-24 rounded-full
@@ -59,7 +59,7 @@
             </div>
 
             <!-- Handlungsfelder -->
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg category-breakdown no-break">
                 <div class="p-6 lg:p-8 bg-white border-b border-gray-200">
                     <h3 class="text-xl font-semibold text-gray-900 mb-6">
                         Aufschlüsselung nach Handlungsfeldern
@@ -104,7 +104,7 @@
 
             <!-- Verbesserungsvorschläge -->
             @if(!empty($recommendations))
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg recommendations-section">
                     <div class="p-6 lg:p-8 bg-white border-b border-gray-200">
                         <h3 class="text-xl font-semibold text-gray-900 mb-6">
                             Ihre nächsten Schritte
@@ -159,7 +159,7 @@
 
             <!-- Zusatzmaterialien -->
             @if(!empty($resources))
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg resources-section">
                     <div class="p-6 lg:p-8 bg-white border-b border-gray-200">
                         <h3 class="text-xl font-semibold text-gray-900 mb-6">
                             Empfohlene Ressourcen
@@ -200,7 +200,7 @@
             @endif
 
             <!-- Aktionen -->
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg print:hidden">
                 <div class="p-6 lg:p-8">
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
                         <form method="POST" action="{{ route('questionnaire.reset') }}" class="inline">

@@ -106,10 +106,14 @@ class QuestionnaireController extends Controller
             // Berechne Gesamtpunkte
             $totalPoints = $user->answers()->where('answer', true)->sum('points_awarded');
             $totalQuestions = Question::active()->count();
-            $percentage = round(($totalPoints / $totalQuestions) * 100, 2);
-
+            if ($totalQuestions === 0) {
+                $percentage = 0;
+            } else {
+                $percentage = round(($totalPoints / $totalQuestions) * 100, 2);
+            }
+            
             // Bestimme Status
-            $status = Result::calculateStatus($totalPoints);
+            $status = Result::calculateStatus($percentage);
 
             // Berechne Punkte pro Kategorie
             $categoryScores = $this->calculateCategoryScores($user);

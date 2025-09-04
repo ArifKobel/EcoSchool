@@ -38,11 +38,11 @@ class Result extends Model
     /**
      * Calculate status based on total points.
      */
-    public static function calculateStatus(int $points): string
+    public static function calculateStatus(int $percentage): string
     {
-        if ($points >= 91) {
+        if ($percentage >= 91) {
             return 'gold';
-        } elseif ($points >= 71) {
+        } elseif ($percentage >= 71) {
             return 'silver';
         } else {
             return 'bronze';
