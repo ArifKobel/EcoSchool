@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Question;
+use App\Observers\QuestionObserver;
 use BezhanSalleh\LanguageSwitch\LanguageSwitch;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +27,8 @@ class AppServiceProvider extends ServiceProvider
                 'de',
             ]);
         });
-        //
+
+        // Register observers
+        Question::observe(QuestionObserver::class);
     }
 }

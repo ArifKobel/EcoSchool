@@ -64,4 +64,73 @@ class Question extends Model
     {
         return $query->orderBy('order');
     }
+
+    /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($question) {
+            if ($question->order === null) {
+                $question->order = static::where('category_id', $question->category_id)->max('order') + 1;
+            }
+        });
+
+        static::updating(function ($question) {
+            // Wenn category_id geändert wird, order neu setzen
+            if ($question->isDirty('category_id')) {
+                $question->order = static::where('category_id', $question->category_id)->max('order') + 1;
+            }
+        });
+    }
+
+    /**
+     * Reorder questions after deletion.
+     */
+    protected static function reorderAfterDeletion($categoryId)
+    {
+        $questions = static::where('category_id', $categoryId)
+            ->orderBy('order')
+            ->get();
+
+        foreach ($questions as $index => $question) {
+            $question->update(['order' => $index + 1]);
+        }
+    }
+
+    /**
+     * Move question up in order.
+     */
+    public function moveOrderUp()
+    {
+        $previousQuestion = static::where('category_id', $this->category_id)
+            ->where('order', '<', $this->order)
+            ->orderBy('order', 'desc')
+            ->first();
+
+        if ($previousQuestion) {
+            $tempOrder = $this->order;
+            $this->update(['order' => $previousQuestion->order]);
+            $previousQuestion->update(['order' => $tempOrder]);
+        }
+    }
+
+    /**
+     * Move question down in order.
+     */
+    public function moveOrderDown()
+    {
+        $nextQuestion = static::where('category_id', $this->category_id)
+            ->where('order', '>', $this->order)
+            ->orderBy('order', 'asc')
+            ->first();
+
+        if ($nextQuestion) {
+            $tempOrder = $this->order;
+            $this->update(['order' => $nextQuestion->order]);
+            $nextQuestion->update(['order' => $tempOrder]);
+        }
+    }
 }
