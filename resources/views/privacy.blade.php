@@ -12,127 +12,126 @@
 
                     <div class="prose dark:prose-invert max-w-none">
 
-                        <h1>Datenschutzerklärung für die BBNE-Selbsteinschätzung</h1>
+                        <h1>Lorem Ipsum</h1>
 
                         <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">
-                            Stand: {{ date('d.m.Y') }}
+                            Lorem ipsum dolor sit amet
                         </p>
 
-                        <h2>1. Verantwortlicher</h2>
+                        <h2>Lorem ipsum dolor sit amet</h2>
                         <p>
-                            Verantwortlich für die Verarbeitung personenbezogener Daten im Rahmen dieser Web-Anwendung ist:<br>
-                            [Name der Institution]<br>
-                            [Adresse]<br>
-                            [E-Mail]<br>
-                            [Telefon]
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         </p>
 
-                        <h2>2. Zweck der Datenverarbeitung</h2>
+                        <h2>Lorem ipsum dolor sit amet</h2>
                         <p>
-                            Diese Web-Anwendung dient der Selbsteinschätzung von Schulen im Bereich "Berufliche Bildung für nachhaltige Entwicklung" (BBNE).
-                            Die Datenverarbeitung erfolgt ausschließlich zu diesem Zweck.
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         </p>
 
-                        <h2>3. Erhobene Daten</h2>
-
-                        <h3>3.1 Pflichtangaben bei der Registrierung</h3>
+                        <h2>Lorem ipsum dolor sit amet</h2>
+                        <h3>Lorem ipsum dolor sit amet</h3>
                         <ul>
-                            <li>E-Mail-Adresse (für Authentifizierung und Kommunikation)</li>
-                            <li>Passwort (verschlüsselt gespeichert)</li>
+                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                            <li>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</li>
+                            <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</li>
                         </ul>
 
-                        <h3>3.2 Freiwillige Angaben</h3>
+                        <h3>Lorem ipsum dolor sit amet</h3>
                         <ul>
-                            <li>Schulname (optional)</li>
-                            <li>Schulart (optional)</li>
-                            <li>Standort der Schule (optional)</li>
-                            <li>Rolle des Users (optional)</li>
+                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                            <li>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</li>
+                            <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</li>
                         </ul>
 
-                        <h3>3.3 Automatisch erfasste Daten</h3>
+                        <h3>Lorem ipsum dolor sit amet</h3>
                         <ul>
-                            <li>Antworten auf den Selbsteinschätzungsfragebogen</li>
-                            <li>Berechnete Ergebnisse und Status (Bronze/Silber/Gold)</li>
-                            <li>Zeitstempel der Antworten und des Abschlusses</li>
-                            <li>IP-Adresse (nur temporär für Sicherheit)</li>
+                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                            <li>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</li>
+                            <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</li>
                         </ul>
 
-                        <h2>4. Rechtsgrundlage</h2>
+                        <h2>Lorem ipsum dolor sit amet</h2>
                         <p>
-                            Die Verarbeitung Ihrer Daten erfolgt auf Grundlage Ihrer ausdrücklichen Einwilligung (Art. 6 Abs. 1 lit. a DSGVO)
-                            sowie zur Erfüllung des Vertrags über die Nutzung dieser Anwendung (Art. 6 Abs. 1 lit. b DSGVO).
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         </p>
 
-                        <h2>5. Speicherdauer</h2>
+                        <h2>Lorem ipsum dolor sit amet</h2>
                         <ul>
-                            <li><strong>Konto- und Profildaten:</strong> Werden gespeichert, solange Ihr Konto aktiv ist</li>
-                            <li><strong>Fragebogenantworten:</strong> Werden für die Dauer Ihres aktiven Kontos gespeichert</li>
-                            <li><strong>Ergebnisse:</strong> Werden dauerhaft gespeichert, um Entwicklung zu dokumentieren</li>
-                            <li><strong>Gelöschte Konten:</strong> Alle Daten werden innerhalb von 30 Tagen nach Kontolöschung entfernt</li>
+                            <li><strong>Lorem ipsum dolor:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                            <li><strong>Sed do eiusmod tempor:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                            <li><strong>Ut enim ad minim veniam:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                            <li><strong>Quis nostrud exercitation:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
                         </ul>
 
-                        <h2>6. Anonyme Nutzung</h2>
+                        <h2>Lorem ipsum dolor sit amet</h2>
                         <p>
-                            Sie haben die Möglichkeit, die Anwendung anonym zu nutzen. In diesem Fall werden keine personenbezogenen Daten
-                            erhoben oder gespeichert. Die Ergebnisse werden nur temporär zur Anzeige verwendet und nicht dauerhaft gespeichert.
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         </p>
 
-                        <h2>7. Ihre Rechte</h2>
-
-                        <p>Sie haben folgende Rechte bezüglich Ihrer personenbezogenen Daten:</p>
-
+                        <h2>Lorem ipsum dolor sit amet</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit:</p>
                         <ul>
-                            <li><strong>Auskunftsrecht (Art. 15 DSGVO):</strong> Sie können Auskunft über die zu Ihrer Person gespeicherten Daten verlangen</li>
-                            <li><strong>Berichtigungsrecht (Art. 16 DSGVO):</strong> Sie können unrichtige Daten berichtigen lassen</li>
-                            <li><strong>Löschungsrecht (Art. 17 DSGVO):</strong> Sie können die Löschung Ihrer Daten verlangen</li>
-                            <li><strong>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO):</strong> Sie können die Verarbeitung einschränken lassen</li>
-                            <li><strong>Widerspruchsrecht (Art. 21 DSGVO):</strong> Sie können der Verarbeitung widersprechen</li>
-                            <li><strong>Recht auf Datenübertragbarkeit (Art. 20 DSGVO):</strong> Sie können Ihre Daten in einem strukturierten Format erhalten</li>
+                            <li><strong>Lorem ipsum dolor sit amet:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                            <li><strong>Sed do eiusmod tempor incididunt:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                            <li><strong>Ut enim ad minim veniam:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                            <li><strong>Quis nostrud exercitation ullamco:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                            <li><strong>Duis aute irure dolor:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                            <li><strong>In reprehenderit in voluptate:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
                         </ul>
 
-                        <h2>8. Datensicherheit</h2>
+                        <h2>Lorem ipsum dolor sit amet</h2>
                         <p>
-                            Wir setzen technische und organisatorische Maßnahmen ein, um Ihre Daten vor unbefugtem Zugriff,
-                            Verlust oder Manipulation zu schützen. Dazu gehören:
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         </p>
                         <ul>
-                            <li>Verschlüsselte Datenübertragung (HTTPS)</li>
-                            <li>Verschlüsselte Datenspeicherung</li>
-                            <li>Regelmäßige Sicherheitsupdates</li>
-                            <li>Zugriffsbeschränkungen</li>
+                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                            <li>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</li>
+                            <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</li>
+                            <li>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</li>
                         </ul>
 
-                        <h2>9. Cookies</h2>
+                        <h2>Lorem ipsum dolor sit amet</h2>
                         <p>
-                            Diese Anwendung verwendet nur technisch notwendige Cookies für die Authentifizierung und Session-Verwaltung.
-                            Es werden keine Tracking-Cookies oder Analyse-Tools verwendet.
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         </p>
 
-                        <h2>10. Kontakt</h2>
+                        <h2>Lorem ipsum dolor sit amet</h2>
                         <p>
-                            Bei Fragen zum Datenschutz oder zur Ausübung Ihrer Rechte wenden Sie sich bitte an:<br>
-                            [Datenschutzbeauftragter]<br>
-                            E-Mail: [E-Mail-Adresse]<br>
-                            Telefon: [Telefonnummer]
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         </p>
 
-                        <h2>11. Änderungen dieser Datenschutzerklärung</h2>
+                        <h2>Lorem ipsum dolor sit amet</h2>
                         <p>
-                            Wir behalten uns vor, diese Datenschutzerklärung anzupassen, wenn dies aufgrund gesetzlicher Änderungen
-                            oder technischer Entwicklungen notwendig wird. Über wesentliche Änderungen werden wir Sie informieren.
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         </p>
 
                         <hr class="my-8">
 
                         <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-                            <h3 class="font-semibold text-blue-800 dark:text-blue-200 mb-2">Ihre Einwilligung</h3>
+                            <h3 class="font-semibold text-blue-800 dark:text-blue-200 mb-2">Lorem ipsum dolor sit amet</h3>
                             <p class="text-sm text-blue-700 dark:text-blue-300 mb-4">
-                                Mit der Nutzung dieser Anwendung erklären Sie sich mit der beschriebenen Datenverarbeitung einverstanden.
-                                Ihre Einwilligung können Sie jederzeit mit Wirkung für die Zukunft widerrufen.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                             </p>
                             <p class="text-xs text-blue-600 dark:text-blue-400">
-                                Diese Datenschutzerklärung wurde mit größter Sorgfalt erstellt. Für die Richtigkeit und Vollständigkeit
-                                kann jedoch keine Gewähr übernommen werden.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                             </p>
                         </div>
 
