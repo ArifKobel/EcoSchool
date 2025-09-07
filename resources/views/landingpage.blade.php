@@ -12,7 +12,7 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="min-h-screen flex flex-col text-[#1b1b18] dark:text-[#EDEDEC]">
+    <body class="min-h-screen flex flex-col overflow-x-hidden text-[#1b1b18] dark:text-[#EDEDEC]">
         <!-- Background Layers -->
         <div class="fixed inset-0 -z-20">
             <!-- Subtle radial gradient mesh -->
@@ -55,7 +55,7 @@
         </header>
 
         <!-- Hero -->
-        <section class="relative">
+        <section class="relative overflow-hidden">
             <!-- Accent glows -->
             <div class="absolute inset-0 -z-10 opacity-70">
                 <div class="absolute -top-24 -right-16 h-64 w-64 rounded-full bg-emerald-400/40 blur-3xl"></div>
@@ -227,4 +227,3 @@
         </footer>
     </body>
     </html>
-
