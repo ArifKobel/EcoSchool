@@ -32,4 +32,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/results/{result}', [ResultController::class, 'show'])->name('results.show');
 });
 
+// Gäste-Routen
+Route::middleware('guest.access')->group(function () {
+    Route::get('/guest/questionnaire', [QuestionnaireController::class, 'showGuest'])->name('guest.questionnaire.show');
+    Route::post('/guest/questionnaire', [QuestionnaireController::class, 'storeGuest'])->name('guest.questionnaire.store');
+    Route::post('/guest/questionnaire/reset', [QuestionnaireController::class, 'resetGuest'])->name('guest.questionnaire.reset');
+    Route::get('/guest/questionnaire/progress', [QuestionnaireController::class, 'progressGuest'])->name('guest.questionnaire.progress');
+    Route::get('/guest/results', [ResultController::class, 'showGuest'])->name('guest.results.show');
+});
+
 require __DIR__.'/auth.php';

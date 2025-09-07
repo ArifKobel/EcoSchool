@@ -1,56 +1,87 @@
 <x-app-layout class="results-page">
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Ihre BBNE-Ergebnisse') }}
+            @if(isset($is_guest) && $is_guest)
+                {{ __('Ihre anonymen BBNE-Ergebnisse') }}
+            @else
+                {{ __('Ihre BBNE-Ergebnisse') }}
+            @endif
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            @if(isset($is_guest) && $is_guest)
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-blue-700">
+                                <strong>Hinweis:</strong> Sie haben den Fragebogen anonym durchgeführt. Diese Ergebnisse werden nicht gespeichert.
+                                @if(Route::has('register'))
+                                    <a href="{{ route('register') }}" class="font-medium underline text-blue-700 hover:text-blue-600">Registrieren Sie sich</a>, um Ihre Ergebnisse dauerhaft zu speichern.
+                                @endif
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            @endif
 
             <!-- Status Badge und Gesamtergebnis -->
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg result-summary no-break">
                 <div class="p-6 lg:p-8 bg-white border-b border-gray-200">
                     <div class="text-center">
+                        @php
+                            $resultStatus = is_object($result) ? $result->status : $result['status'];
+                            $totalPoints = is_object($result) ? $result->total_points : $result['total_points'];
+                            $maxPoints = is_object($result) ? $result->max_points : $result['max_points'];
+                            $percentage = is_object($result) ? $result->percentage : $result['percentage'];
+                            $statusName = is_object($result) ? $result->getStatusName() : ucfirst($result['status']);
+                        @endphp
+
                         <div class="inline-flex items-center justify-center w-24 h-24 rounded-full
-                                    @if($result->status === 'gold') bg-yellow-100
-                                    @elseif($result->status === 'silver') bg-gray-100
+                                    @if($resultStatus === 'gold') bg-yellow-100
+                                    @elseif($resultStatus === 'silver') bg-gray-100
                                     @else bg-amber-100 @endif mb-4">
                             <span class="text-2xl font-bold
-                                       @if($result->status === 'gold') text-yellow-600
-                                       @elseif($result->status === 'silver') text-gray-600
+                                       @if($resultStatus === 'gold') text-yellow-600
+                                       @elseif($resultStatus === 'silver') text-gray-600
                                        @else text-amber-600 @endif">
-                                {{ $result->total_points }}
+                                {{ $totalPoints }}
                             </span>
                         </div>
 
                         <h1 class="text-3xl font-bold text-gray-900 mb-2" id="result-heading">
-                            {{ $result->getStatusName() }}-Status
+                            {{ $statusName }}-Status
                         </h1>
 
                         <p class="text-lg text-gray-600 mb-4">
-                            {{ $result->percentage }}% erreicht ({{ $result->total_points }} von {{ $result->max_points }} Punkten)
+                            {{ $percentage }}% erreicht ({{ $totalPoints }} von {{ $maxPoints }} Punkten)
                         </p>
 
                         <div class="w-full bg-gray-200 rounded-full h-3 mb-6">
                             <div class="h-3 rounded-full transition-all duration-500
-                                        @if($result->status === 'gold') bg-yellow-500
-                                        @elseif($result->status === 'silver') bg-gray-500
+                                        @if($resultStatus === 'gold') bg-yellow-500
+                                        @elseif($resultStatus === 'silver') bg-gray-500
                                         @else bg-amber-500 @endif"
-                                 style="width: {{ $result->percentage }}%"></div>
+                                 style="width: {{ $percentage }}%"></div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
                             <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
-                                <div class="text-2xl font-bold text-green-600 dark:text-green-400">{{ $result->total_points }}</div>
+                                <div class="text-2xl font-bold text-green-600 dark:text-green-400">{{ $totalPoints }}</div>
                                 <div class="text-sm text-green-600 dark:text-green-400">Ihre Punkte</div>
                             </div>
                             <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-                                <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{ $result->max_points }}</div>
+                                <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{ $maxPoints }}</div>
                                 <div class="text-sm text-blue-600 dark:text-blue-400">Maximale Punkte</div>
                             </div>
                             <div class="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg">
-                                <div class="text-2xl font-bold text-purple-600 dark:text-purple-400">{{ $result->percentage }}%</div>
+                                <div class="text-2xl font-bold text-purple-600 dark:text-purple-400">{{ $percentage }}%</div>
                                 <div class="text-sm text-purple-600 dark:text-purple-400">Erreichter Score</div>
                             </div>
                         </div>
@@ -68,7 +99,8 @@
                     <div class="space-y-4">
                         @foreach($categories as $category)
                             @php
-                                $categoryScore = $result->category_scores[$category->slug] ?? ['points' => 0, 'max_points' => 0, 'percentage' => 0];
+                                $categoryScores = is_object($result) ? $result->category_scores : $result['category_scores'];
+                                $categoryScore = $categoryScores[$category->slug] ?? ['points' => 0, 'max_points' => 0, 'percentage' => 0];
                             @endphp
                             <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                                 <div class="flex-1">
@@ -203,7 +235,7 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg print:hidden">
                 <div class="p-6 lg:p-8">
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <form method="POST" action="{{ route('questionnaire.reset') }}" class="inline">
+                        <form method="POST" action="{{ (isset($is_guest) && $is_guest) ? route('guest.questionnaire.reset') : route('questionnaire.reset') }}" class="inline">
                             @csrf
                             <button type="submit"
                                     class="inline-flex items-center justify-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150"
@@ -222,9 +254,9 @@
                             Ergebnisse drucken
                         </button>
 
-                        <a href="{{ route('dashboard') }}"
+                        <a href="{{ isset($is_guest) && $is_guest ? '/' : route('dashboard') }}"
                            class="inline-flex items-center justify-center px-4 py-2 bg-gray-300 border border-transparent rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                            Zurück zum Dashboard
+                            {{ isset($is_guest) && $is_guest ? 'Zurück zur Startseite' : 'Zurück zum Dashboard' }}
                         </a>
                     </div>
                 </div>

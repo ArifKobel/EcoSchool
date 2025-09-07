@@ -75,7 +75,7 @@
                                     </div>
                                 @endif
 
-                                <form method="POST" action="{{ route('questionnaire.store') }}" class="space-y-4" role="form" aria-labelledby="question-heading">
+                                <form method="POST" action="{{ isset($is_guest) && $is_guest ? route('guest.questionnaire.store') : route('questionnaire.store') }}" class="space-y-4" role="form" aria-labelledby="question-heading">
                                     @csrf
                                     <input type="hidden" name="question_id" value="{{ $nextQuestion->id }}">
 
@@ -102,13 +102,13 @@
                                     </fieldset>
 
                                     <div class="flex justify-between items-center pt-6">
-                                        <a href="{{ route('dashboard') }}"
+                                        <a href="{{ isset($is_guest) && $is_guest ? '/' : route('dashboard') }}"
                                            class="inline-flex items-center px-4 py-2 bg-gray-300 border border-transparent rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
-                                           aria-label="Zurück zum Dashboard navigieren">
+                                           aria-label="{{ isset($is_guest) && $is_guest ? 'Zurück zur Startseite' : 'Zurück zum Dashboard' }}">
                                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                                             </svg>
-                                            Zurück zum Dashboard
+                                            {{ isset($is_guest) && $is_guest ? 'Zurück zur Startseite' : 'Zurück zum Dashboard' }}
                                         </a>
 
                                         <button type="submit"

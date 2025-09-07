@@ -9,12 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class ResultController extends Controller
 {
-    /**
-     * Zeige die Ergebnisse eines Users
-     */
     public function show(Result $result)
     {
-        // Stelle sicher, dass der User nur seine eigenen Ergebnisse sehen kann
         if ($result->user_id !== Auth::id()) {
             abort(403);
         }
@@ -229,5 +225,134 @@ class ResultController extends Controller
         ];
 
         return $resources[$status] ?? $resources['bronze'];
+    }
+
+    /**
+     * Zeige Gast-Ergebnisse
+     */
+    public function showGuest()
+    {
+        $guestResult = session('guest_result');
+
+        if (!$guestResult) {
+            return redirect('/')->with('error', 'Keine Gast-Ergebnisse gefunden. Bitte starten Sie den Fragebogen erneut.');
+        }
+
+        $categories = Category::all();
+
+        // Verbesserungsvorschläge basierend auf dem Status
+        $recommendations = $this->getGuestRecommendations($guestResult);
+
+        // Ressourcen basierend auf dem Status
+        $resources = $this->getResources($guestResult['status']);
+
+        return view('results.show', [
+            'result' => $guestResult,
+            'user' => null,
+            'categories' => $categories,
+            'recommendations' => $recommendations,
+            'resources' => $resources,
+            'is_guest' => true
+        ]);
+    }
+
+    /**
+     * Generiere Verbesserungsvorschläge für Gäste basierend auf dem Status
+     */
+    private function getGuestRecommendations($guestResult)
+    {
+        $recommendations = [];
+
+        switch ($guestResult['status']) {
+            case 'bronze':
+                $recommendations = $this->getBronzeRecommendationsForGuest($guestResult);
+                break;
+            case 'silver':
+                $recommendations = $this->getSilverRecommendationsForGuest($guestResult);
+                break;
+            case 'gold':
+                $recommendations = $this->getGoldRecommendationsForGuest($guestResult);
+                break;
+        }
+
+        return $recommendations;
+    }
+
+    /**
+     * Empfehlungen für Bronze-Status (Gast-Version)
+     */
+    private function getBronzeRecommendationsForGuest($guestResult)
+    {
+        $recommendations = [
+            'general' => [
+                'Erstellen Sie eine schriftliche Nachhaltigkeitsstrategie für Ihre Schule',
+                'Benennen Sie eine verantwortliche Person für Nachhaltigkeitsthemen',
+                'Integrieren Sie Nachhaltigkeit in die Schulordnung',
+                'Planen Sie ein Budget für Nachhaltigkeitsprojekte ein'
+            ]
+        ];
+
+        // Kategoriespezifische Empfehlungen
+        if (isset($guestResult['category_scores'])) {
+            foreach ($guestResult['category_scores'] as $categorySlug => $scores) {
+                if ($scores['percentage'] < 50) {
+                    $recommendations['categories'][$categorySlug] = $this->getCategoryRecommendations($categorySlug, 'bronze');
+                }
+            }
+        }
+
+        return $recommendations;
+    }
+
+    /**
+     * Empfehlungen für Silber-Status (Gast-Version)
+     */
+    private function getSilverRecommendationsForGuest($guestResult)
+    {
+        $recommendations = [
+            'general' => [
+                'Entwickeln Sie ein umfassendes Qualitätsmanagementsystem',
+                'Bauen Sie Partnerschaften mit externen Organisationen aus',
+                'Führen Sie regelmäßige Fortbildungen durch',
+                'Implementieren Sie ein Energiemanagementsystem'
+            ]
+        ];
+
+        // Kategoriespezifische Empfehlungen
+        if (isset($guestResult['category_scores'])) {
+            foreach ($guestResult['category_scores'] as $categorySlug => $scores) {
+                if ($scores['percentage'] < 70) {
+                    $recommendations['categories'][$categorySlug] = $this->getCategoryRecommendations($categorySlug, 'silver');
+                }
+            }
+        }
+
+        return $recommendations;
+    }
+
+    /**
+     * Empfehlungen für Gold-Status (Gast-Version)
+     */
+    private function getGoldRecommendationsForGuest($guestResult)
+    {
+        $recommendations = [
+            'general' => [
+                'Streben Sie Zertifizierungen an (z.B. Öko-Schule, Energieeffizienz)',
+                'Bauen Sie ein Netzwerk mit anderen nachhaltigen Schulen auf',
+                'Entwickeln Sie sich zu einem Vorbild in der Region',
+                'Teilen Sie Ihre Erfahrungen und Materialien mit anderen Schulen'
+            ]
+        ];
+
+        // Kategoriespezifische Empfehlungen für höchste Exzellenz
+        if (isset($guestResult['category_scores'])) {
+            foreach ($guestResult['category_scores'] as $categorySlug => $scores) {
+                if ($scores['percentage'] < 90) {
+                    $recommendations['categories'][$categorySlug] = $this->getCategoryRecommendations($categorySlug, 'gold');
+                }
+            }
+        }
+
+        return $recommendations;
     }
 }
