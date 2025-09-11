@@ -16,12 +16,10 @@ class GuestAccess
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Wenn der Benutzer eingeloggt ist, erlaube den Zugriff
         if (Auth::check()) {
             return $next($request);
         }
 
-        // Für Gäste: Prüfe ob es sich um erlaubte Routen handelt
         $allowedRoutes = [
             'guest.questionnaire.show',
             'guest.questionnaire.store',
@@ -36,7 +34,6 @@ class GuestAccess
             return $next($request);
         }
 
-        // Wenn es keine erlaubte Route ist, leite zur Landingpage weiter
         return redirect('/')->with('error', 'Bitte melden Sie sich an oder starten Sie den Fragebogen als Gast.');
     }
 }

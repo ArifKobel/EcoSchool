@@ -22,17 +22,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Fragebogen-Routen
     Route::get('/questionnaire', [QuestionnaireController::class, 'show'])->name('questionnaire.show');
     Route::post('/questionnaire', [QuestionnaireController::class, 'store'])->name('questionnaire.store');
     Route::post('/questionnaire/reset', [QuestionnaireController::class, 'reset'])->name('questionnaire.reset');
     Route::get('/questionnaire/progress', [QuestionnaireController::class, 'progress'])->name('questionnaire.progress');
 
-    // Ergebnis-Routen
     Route::get('/results/{result}', [ResultController::class, 'show'])->name('results.show');
 });
 
-// Gäste-Routen
 Route::middleware('guest.access')->group(function () {
     Route::get('/guest/questionnaire', [QuestionnaireController::class, 'showGuest'])->name('guest.questionnaire.show');
     Route::post('/guest/questionnaire', [QuestionnaireController::class, 'storeGuest'])->name('guest.questionnaire.store');

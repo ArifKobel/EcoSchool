@@ -79,7 +79,6 @@ class Question extends Model
         });
 
         static::updating(function ($question) {
-            // Wenn category_id geändert wird, order neu setzen
             if ($question->isDirty('category_id')) {
                 $question->order = static::where('category_id', $question->category_id)->max('order') + 1;
             }

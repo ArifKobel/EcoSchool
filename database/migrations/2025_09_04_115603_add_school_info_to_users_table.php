@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('school_name')->nullable(); // Name der Schule (optional für Anonymität)
-            $table->string('school_type')->nullable(); // Art der Schule (Grundschule, Gymnasium, etc.)
-            $table->string('school_location')->nullable(); // Ort der Schule (optional)
-            $table->string('role')->nullable(); // Rolle des Users (Lehrkraft, Schulleitung, etc.)
-            $table->boolean('data_consent')->default(false); // DSGVO-Einwilligung
-            $table->timestamp('consent_given_at')->nullable(); // Wann wurde die Einwilligung gegeben
-            $table->boolean('anonymous_mode')->default(false); // Anonymer Modus aktiviert?
-            $table->json('preferences')->nullable(); // Benutzerpräferenzen (JSON)
+            $table->string('school_name')->nullable();
+            $table->string('school_type')->nullable();
+            $table->string('school_location')->nullable();
+            $table->string('role')->nullable();
+            $table->boolean('data_consent')->default(false);
+            $table->timestamp('consent_given_at')->nullable();
+            $table->boolean('anonymous_mode')->default(false);
+            $table->json('preferences')->nullable();
         });
     }
 

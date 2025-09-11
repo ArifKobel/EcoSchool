@@ -31,7 +31,6 @@
                 </div>
             @endif
 
-            <!-- Status Badge und Gesamtergebnis -->
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg result-summary no-break">
                 <div class="p-6 lg:p-8 bg-white border-b border-gray-200">
                     <div class="text-center">
@@ -89,7 +88,6 @@
                 </div>
             </div>
 
-            <!-- Handlungsfelder -->
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg category-breakdown no-break">
                 <div class="p-6 lg:p-8 bg-white border-b border-gray-200">
                     <h3 class="text-xl font-semibold text-gray-900 mb-6">
@@ -134,7 +132,6 @@
                 </div>
             </div>
 
-            <!-- Verbesserungsvorschläge -->
             @if(!empty($recommendations))
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg recommendations-section">
                     <div class="p-6 lg:p-8 bg-white border-b border-gray-200">
@@ -142,7 +139,6 @@
                             Ihre nächsten Schritte
                         </h3>
 
-                        <!-- Allgemeine Empfehlungen -->
                         @if(isset($recommendations['general']) && !empty($recommendations['general']))
                             <div class="mb-6">
                                 <h4 class="font-medium text-gray-900 dark:text-white mb-3">Allgemeine Empfehlungen</h4>
@@ -159,7 +155,6 @@
                             </div>
                         @endif
 
-                        <!-- Kategoriespezifische Empfehlungen -->
                         @if(isset($recommendations['categories']) && !empty($recommendations['categories']))
                             <div>
                                 <h4 class="font-medium text-gray-900 dark:text-white mb-3">Handlungsfeld-spezifische Empfehlungen</h4>
@@ -189,7 +184,6 @@
                 </div>
             @endif
 
-            <!-- Zusatzmaterialien -->
             @if(!empty($resources))
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg resources-section">
                     <div class="p-6 lg:p-8 bg-white border-b border-gray-200">
@@ -231,7 +225,6 @@
                 </div>
             @endif
 
-            <!-- Aktionen -->
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg print:hidden">
                 <div class="p-6 lg:p-8">
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">

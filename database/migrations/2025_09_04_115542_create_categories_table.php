@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // Name der Kategorie (z.B. "Schulleitung und Steuerung")
-            $table->string('slug')->unique(); // URL-friendly slug
-            $table->text('description')->nullable(); // Beschreibung der Kategorie
-            $table->integer('weight')->default(1); // Gewichtung für Berechnung
-            $table->integer('question_count')->default(0); // Anzahl Fragen in dieser Kategorie
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->text('description')->nullable();
+            $table->integer('weight')->default(1);
+            $table->integer('question_count')->default(0);
             $table->timestamps();
         });
     }

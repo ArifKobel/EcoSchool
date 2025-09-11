@@ -43,7 +43,6 @@ class RegisteredUserController extends Controller
             'anonymous_mode' => ['nullable']
         ]);
 
-        // Wenn anonymer Modus aktiviert ist, lösche Schul-Informationen
         $schoolData = [];
         if (!$isAnonymous) {
             $schoolData = [

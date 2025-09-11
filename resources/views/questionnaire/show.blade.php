@@ -10,7 +10,6 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 lg:p-8 bg-white border-b border-gray-200">
 
-                    <!-- Fortschritt -->
                     <div class="mb-8" role="progressbar" aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100" aria-label="Fragebogen-Fortschritt">
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-sm font-medium text-gray-700">
@@ -26,7 +25,6 @@
                         </div>
                     </div>
 
-                    <!-- Frage -->
                     @if($nextQuestion)
                         <div class="mb-8">
                             <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">

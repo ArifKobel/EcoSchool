@@ -11,7 +11,6 @@ class QuestionObserver
      */
     public function deleted(Question $question): void
     {
-        // Reorder questions in the same category after deletion
         Question::reorderAfterDeletion($question->category_id);
     }
 }

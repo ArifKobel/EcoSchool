@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('results', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->integer('total_points')->default(0); // Gesamtpunkte
-            $table->integer('max_points')->default(100); // Maximale mögliche Punkte
-            $table->decimal('percentage', 5, 2)->default(0); // Prozentuale Auswertung
-            $table->enum('status', ['bronze', 'silver', 'gold']); // Status basierend auf Punkten
-            $table->json('category_scores')->nullable(); // Punkte pro Kategorie
-            $table->timestamp('completed_at')->nullable(); // Wann wurde der Fragebogen abgeschlossen
-            $table->boolean('is_final')->default(false); // Ist dies das finale Ergebnis?
+            $table->integer('total_points')->default(0);
+            $table->integer('max_points')->default(100);
+            $table->decimal('percentage', 5, 2)->default(0);
+            $table->enum('status', ['bronze', 'silver', 'gold']);
+            $table->json('category_scores')->nullable();
+            $table->timestamp('completed_at')->nullable();
+            $table->boolean('is_final')->default(false);
             $table->timestamps();
 
             $table->index(['user_id', 'is_final']);

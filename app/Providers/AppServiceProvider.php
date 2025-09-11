@@ -28,7 +28,6 @@ class AppServiceProvider extends ServiceProvider
             ]);
         });
 
-        // Register observers
         Question::observe(QuestionObserver::class);
     }
 }

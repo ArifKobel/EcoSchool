@@ -18,10 +18,8 @@ class ResultController extends Controller
         $user = Auth::user();
         $categories = Category::all();
 
-        // Verbesserungsvorschläge basierend auf dem Status
         $recommendations = $this->getRecommendations($result);
 
-        // Ressourcen basierend auf dem Status
         $resources = $this->getResources($result->status);
 
         return view('results.show', compact(
@@ -33,9 +31,7 @@ class ResultController extends Controller
         ));
     }
 
-    /**
-     * Generiere Verbesserungsvorschläge basierend auf dem Status
-     */
+    /** */
     private function getRecommendations(Result $result)
     {
         $recommendations = [];
@@ -55,9 +51,7 @@ class ResultController extends Controller
         return $recommendations;
     }
 
-    /**
-     * Empfehlungen für Bronze-Status
-     */
+    /** */
     private function getBronzeRecommendations(Result $result)
     {
         $recommendations = [
@@ -69,7 +63,6 @@ class ResultController extends Controller
             ]
         ];
 
-        // Kategoriespezifische Empfehlungen
         if (isset($result->category_scores)) {
             foreach ($result->category_scores as $categorySlug => $scores) {
                 if ($scores['percentage'] < 50) {
@@ -81,9 +74,7 @@ class ResultController extends Controller
         return $recommendations;
     }
 
-    /**
-     * Empfehlungen für Silber-Status
-     */
+    /** */
     private function getSilverRecommendations(Result $result)
     {
         $recommendations = [
@@ -95,7 +86,6 @@ class ResultController extends Controller
             ]
         ];
 
-        // Kategoriespezifische Empfehlungen
         if (isset($result->category_scores)) {
             foreach ($result->category_scores as $categorySlug => $scores) {
                 if ($scores['percentage'] < 70) {
@@ -107,9 +97,7 @@ class ResultController extends Controller
         return $recommendations;
     }
 
-    /**
-     * Empfehlungen für Gold-Status
-     */
+    /** */
     private function getGoldRecommendations(Result $result)
     {
         $recommendations = [
@@ -121,7 +109,6 @@ class ResultController extends Controller
             ]
         ];
 
-        // Kategoriespezifische Empfehlungen für höchste Exzellenz
         if (isset($result->category_scores)) {
             foreach ($result->category_scores as $categorySlug => $scores) {
                 if ($scores['percentage'] < 90) {
@@ -133,9 +120,7 @@ class ResultController extends Controller
         return $recommendations;
     }
 
-    /**
-     * Kategoriespezifische Empfehlungen
-     */
+    /** */
     private function getCategoryRecommendations($categorySlug, $level)
     {
         $recommendations = [
@@ -174,9 +159,7 @@ class ResultController extends Controller
         return $recommendations[$categorySlug][$level] ?? [];
     }
 
-    /**
-     * Ressourcen basierend auf dem Status
-     */
+    /** */
     private function getResources($status)
     {
         $resources = [
@@ -227,9 +210,7 @@ class ResultController extends Controller
         return $resources[$status] ?? $resources['bronze'];
     }
 
-    /**
-     * Zeige Gast-Ergebnisse
-     */
+    /** */
     public function showGuest()
     {
         $guestResult = session('guest_result');
@@ -240,10 +221,8 @@ class ResultController extends Controller
 
         $categories = Category::all();
 
-        // Verbesserungsvorschläge basierend auf dem Status
         $recommendations = $this->getGuestRecommendations($guestResult);
 
-        // Ressourcen basierend auf dem Status
         $resources = $this->getResources($guestResult['status']);
 
         return view('results.show', [
@@ -256,9 +235,7 @@ class ResultController extends Controller
         ]);
     }
 
-    /**
-     * Generiere Verbesserungsvorschläge für Gäste basierend auf dem Status
-     */
+    /** */
     private function getGuestRecommendations($guestResult)
     {
         $recommendations = [];
@@ -278,9 +255,7 @@ class ResultController extends Controller
         return $recommendations;
     }
 
-    /**
-     * Empfehlungen für Bronze-Status (Gast-Version)
-     */
+    /** */
     private function getBronzeRecommendationsForGuest($guestResult)
     {
         $recommendations = [
@@ -292,7 +267,6 @@ class ResultController extends Controller
             ]
         ];
 
-        // Kategoriespezifische Empfehlungen
         if (isset($guestResult['category_scores'])) {
             foreach ($guestResult['category_scores'] as $categorySlug => $scores) {
                 if ($scores['percentage'] < 50) {
@@ -304,9 +278,7 @@ class ResultController extends Controller
         return $recommendations;
     }
 
-    /**
-     * Empfehlungen für Silber-Status (Gast-Version)
-     */
+    /** */
     private function getSilverRecommendationsForGuest($guestResult)
     {
         $recommendations = [
@@ -318,7 +290,6 @@ class ResultController extends Controller
             ]
         ];
 
-        // Kategoriespezifische Empfehlungen
         if (isset($guestResult['category_scores'])) {
             foreach ($guestResult['category_scores'] as $categorySlug => $scores) {
                 if ($scores['percentage'] < 70) {
@@ -330,9 +301,7 @@ class ResultController extends Controller
         return $recommendations;
     }
 
-    /**
-     * Empfehlungen für Gold-Status (Gast-Version)
-     */
+    /** */
     private function getGoldRecommendationsForGuest($guestResult)
     {
         $recommendations = [
@@ -344,7 +313,6 @@ class ResultController extends Controller
             ]
         ];
 
-        // Kategoriespezifische Empfehlungen für höchste Exzellenz
         if (isset($guestResult['category_scores'])) {
             foreach ($guestResult['category_scores'] as $categorySlug => $scores) {
                 if ($scores['percentage'] < 90) {

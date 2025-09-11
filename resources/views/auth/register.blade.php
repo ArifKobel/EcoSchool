@@ -2,21 +2,18 @@
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
-        <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
-        <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('E-Mail')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Passwort')" />
 
@@ -28,7 +25,6 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <!-- Confirm Password -->
         <div class="mt-4">
             <x-input-label for="password_confirmation" :value="__('Passwort bestätigen')" />
 
@@ -39,19 +35,16 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <!-- Schul-Informationen (optional) -->
         <div class="mt-6" id="school-info-section">
             <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Schul-Informationen (optional)</h3>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- School Name -->
                 <div>
                     <x-input-label for="school_name" :value="__('Schulname')" />
                     <x-text-input id="school_name" class="block mt-1 w-full" type="text" name="school_name" :value="old('school_name')" autocomplete="organization" />
                     <x-input-error :messages="$errors->get('school_name')" class="mt-2" />
                 </div>
 
-                <!-- School Type -->
                 <div>
                     <x-input-label for="school_type" :value="__('Schulart')" />
                     <select id="school_type" name="school_type" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
@@ -68,14 +61,12 @@
                     <x-input-error :messages="$errors->get('school_type')" class="mt-2" />
                 </div>
 
-                <!-- School Location -->
                 <div>
                     <x-input-label for="school_location" :value="__('Standort')" />
                     <x-text-input id="school_location" class="block mt-1 w-full" type="text" name="school_location" :value="old('school_location')" autocomplete="address-level2" />
                     <x-input-error :messages="$errors->get('school_location')" class="mt-2" />
                 </div>
 
-                <!-- Role -->
                 <div>
                     <x-input-label for="role" :value="__('Ihre Rolle')" />
                     <select id="role" name="role" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
@@ -101,14 +92,12 @@
                 }
             });
 
-            // Initialer Zustand prüfen
             if (document.getElementById('anonymous_mode').checked) {
                 document.getElementById('school-info-section').style.opacity = '0.5';
                 document.getElementById('school-info-section').style.pointerEvents = 'none';
             }
         </script>
 
-        <!-- DSGVO Einwilligung -->
         <div class="mt-6">
             <div class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-4">
                 <div class="flex items-start">
@@ -130,7 +119,6 @@
             </div>
         </div>
 
-        <!-- Anonyme Nutzung -->
         <div class="mt-4">
             <div class="flex items-start">
                 <div class="flex items-center h-5">

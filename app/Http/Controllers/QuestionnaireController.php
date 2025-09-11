@@ -11,9 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class QuestionnaireController extends Controller
 {
-    /**
-     * Zeige die nächste Frage oder den Fragebogen-Start
-     */
+    /** */
     public function show(Request $request)
     {
         $user = Auth::user();
@@ -42,9 +40,7 @@ class QuestionnaireController extends Controller
         ));
     }
 
-    /**
-     * Speichere eine Antwort
-     */
+    /** */
     public function store(Request $request)
     {
         $request->validate([
@@ -88,9 +84,7 @@ class QuestionnaireController extends Controller
         return redirect()->route('questionnaire.show');
     }
 
-    /**
-     * Schließe den Fragebogen ab und berechne Ergebnis
-     */
+    /** */
     private function completeQuestionnaire($user)
     {
         DB::transaction(function () use ($user) {
@@ -124,9 +118,7 @@ class QuestionnaireController extends Controller
         return redirect()->route('results.show', $result);
     }
 
-    /**
-     * Berechne Punkte pro Kategorie
-     */
+    /** */
     private function calculateCategoryScores($user)
     {
         $scores = [];
@@ -153,9 +145,7 @@ class QuestionnaireController extends Controller
         return $scores;
     }
 
-    /**
-     * Finde die nächste unbeantwortete Frage
-     */
+    /** */
     private function getNextUnansweredQuestion($user, $questions)
     {
         foreach ($questions as $question) {
@@ -168,9 +158,7 @@ class QuestionnaireController extends Controller
         return null;
     }
 
-    /**
-     * Zeige den Fortschritt
-     */
+    /** */
     public function progress()
     {
         $user = Auth::user();
@@ -182,9 +170,7 @@ class QuestionnaireController extends Controller
         ]);
     }
 
-    /**
-     * Fragebogen zurücksetzen und neu starten
-     */
+    /** */
     public function reset(Request $request)
     {
         $user = Auth::user();
@@ -200,12 +186,9 @@ class QuestionnaireController extends Controller
         return redirect()->route('questionnaire.show')->with('success', 'Fragebogen wurde zurückgesetzt. Sie können ihn nun erneut durchführen.');
     }
 
-    /**
-     * Fragebogen für Gäste zurücksetzen und neu starten
-     */
+    /** */
     public function resetGuest(Request $request)
     {
-        // Debug-Ausgabe für Testing
         if ($request->has('debug')) {
             return response()->json([
                 'message' => 'ResetGuest method reached',
@@ -216,18 +199,14 @@ class QuestionnaireController extends Controller
             ]);
         }
 
-        // Session-Daten für Gäste zurücksetzen
         $request->session()->forget(['guest_answers', 'guest_result']);
 
-        // Stelle sicher, dass die Session aktualisiert wird
         $request->session()->save();
 
         return redirect()->route('guest.questionnaire.show')->with('success', 'Fragebogen wurde zurückgesetzt. Sie können ihn nun erneut durchführen.');
     }
 
-    /**
-     * Zeige die nächste Frage für Gäste
-     */
+    /** */
     public function showGuest(Request $request)
     {
         $questions = Question::active()->ordered()->get();
@@ -251,9 +230,7 @@ class QuestionnaireController extends Controller
         ))->with('is_guest', true);
     }
 
-    /**
-     * Speichere eine Gast-Antwort
-     */
+    /** */
     public function storeGuest(Request $request)
     {
         $request->validate([
@@ -283,9 +260,7 @@ class QuestionnaireController extends Controller
         return redirect()->route('guest.questionnaire.show');
     }
 
-    /**
-     * Schließe den Gast-Fragebogen ab und berechne Ergebnis
-     */
+    /** */
     private function completeGuestQuestionnaire(Request $request)
     {
         $guestAnswers = $request->session()->get('guest_answers', []);
@@ -316,9 +291,7 @@ class QuestionnaireController extends Controller
         return redirect()->route('guest.results.show');
     }
 
-    /**
-     * Berechne Punkte pro Kategorie für Gäste
-     */
+    /** */
     private function calculateGuestCategoryScores($guestAnswers)
     {
         $scores = [];
@@ -346,9 +319,7 @@ class QuestionnaireController extends Controller
         return $scores;
     }
 
-    /**
-     * Finde die nächste unbeantwortete Frage für Gäste
-     */
+    /** */
     private function getNextUnansweredQuestionForGuest($guestAnswers, $questions)
     {
         foreach ($questions as $question) {
@@ -360,9 +331,7 @@ class QuestionnaireController extends Controller
         return null;
     }
 
-    /**
-     * Zeige den Fortschritt für Gäste
-     */
+    /** */
     public function progressGuest(Request $request)
     {
         $guestAnswers = $request->session()->get('guest_answers', []);
