@@ -181,8 +181,8 @@
                 <div class="mt-10 grid gap-6 md:grid-cols-3">
                     <div class="rounded-xl border border-black/10 dark:border-white/10 p-6 bg-white/70 dark:bg-white/5 backdrop-blur">
                         <div class="mb-4 text-sm font-medium text-emerald-700 dark:text-emerald-300">Schritt 1</div>
-                        <p class="font-medium">Anonym starten oder registrieren</p>
-                        <p class="mt-1 text-sm text-black/70 dark:text-white/70">Testen Sie anonym – oder registrieren Sie sich für dauerhafte Speicherung.</p>
+                        <p class="font-medium">Als Gast starten oder registrieren</p>
+                        <p class="mt-1 text-sm text-black/70 dark:text-white/70">Testen Sie als Gast – oder registrieren Sie sich für dauerhafte Speicherung.</p>
                     </div>
                     <div class="rounded-xl border border-black/10 dark:border-white/10 p-6 bg-white/70 dark:bg-white/5 backdrop-blur">
                         <div class="mb-4 text-sm font-medium text-emerald-700 dark:text-emerald-300">Schritt 2</div>

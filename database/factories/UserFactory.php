@@ -35,7 +35,6 @@ class UserFactory extends Factory
             'role' => fake()->optional(0.8)->randomElement(['lehrkraft', 'schulleitung', 'sonstige']),
             'data_consent' => true,
             'consent_given_at' => now(),
-            'anonymous_mode' => fake()->boolean(20), // 20% anonym
             'preferences' => ['theme' => 'light', 'language' => 'de']
         ];
     }

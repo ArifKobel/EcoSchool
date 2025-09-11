@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('role')->nullable();
             $table->boolean('data_consent')->default(false);
             $table->timestamp('consent_given_at')->nullable();
-            $table->boolean('anonymous_mode')->default(false);
             $table->json('preferences')->nullable();
         });
     }
@@ -36,7 +35,6 @@ return new class extends Migration
                 'role',
                 'data_consent',
                 'consent_given_at',
-                'anonymous_mode',
                 'preferences'
             ]);
         });

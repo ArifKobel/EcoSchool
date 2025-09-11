@@ -2,7 +2,7 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             @if(isset($is_guest) && $is_guest)
-                {{ __('Ihre anonymen BBNE-Ergebnisse') }}
+                {{ __('Ihre BBNE-Ergebnisse') }}
             @else
                 {{ __('Ihre BBNE-Ergebnisse') }}
             @endif
@@ -21,7 +21,7 @@
                         </div>
                         <div class="ml-3">
                             <p class="text-sm text-blue-700">
-                                <strong>Hinweis:</strong> Sie haben den Fragebogen anonym durchgeführt. Diese Ergebnisse werden nicht gespeichert.
+                                <strong>Hinweis:</strong> Sie haben den Fragebogen als Gast durchgeführt. Diese Ergebnisse werden nicht gespeichert.
                                 @if(Route::has('register'))
                                     <a href="{{ route('register') }}" class="font-medium underline text-blue-700 hover:text-blue-600">Registrieren Sie sich</a>, um Ihre Ergebnisse dauerhaft zu speichern.
                                 @endif

@@ -35,8 +35,8 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="mt-6" id="school-info-section">
-            <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Schul-Informationen (optional)</h3>
+        <div class="mt-6">
+            <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Schul-Informationen</h3>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -80,23 +80,6 @@
             </div>
         </div>
 
-        <script>
-            document.getElementById('anonymous_mode').addEventListener('change', function() {
-                const schoolInfoSection = document.getElementById('school-info-section');
-                if (this.checked) {
-                    schoolInfoSection.style.opacity = '0.5';
-                    schoolInfoSection.style.pointerEvents = 'none';
-                } else {
-                    schoolInfoSection.style.opacity = '1';
-                    schoolInfoSection.style.pointerEvents = 'auto';
-                }
-            });
-
-            if (document.getElementById('anonymous_mode').checked) {
-                document.getElementById('school-info-section').style.opacity = '0.5';
-                document.getElementById('school-info-section').style.pointerEvents = 'none';
-            }
-        </script>
 
         <div class="mt-6">
             <div class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-4">
@@ -119,21 +102,6 @@
             </div>
         </div>
 
-        <div class="mt-4">
-            <div class="flex items-start">
-                <div class="flex items-center h-5">
-                    <input id="anonymous_mode" name="anonymous_mode" type="checkbox" value="1" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" {{ old('anonymous_mode') ? 'checked' : '' }}>
-                </div>
-                <div class="ml-3 text-sm">
-                    <label for="anonymous_mode" class="font-medium text-gray-700 dark:text-gray-300">
-                        Anonyme Nutzung
-                    </label>
-                    <p class="text-gray-500 dark:text-gray-400">
-                        Ich möchte die Anwendung anonym nutzen. Schul-Informationen werden nicht gespeichert.
-                    </p>
-                </div>
-            </div>
-        </div>
 
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">

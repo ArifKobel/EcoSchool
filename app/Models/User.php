@@ -27,7 +27,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'role',
         'data_consent',
         'consent_given_at',
-        'anonymous_mode',
         'preferences'
     ];
 
@@ -53,7 +52,6 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
             'data_consent' => 'boolean',
             'consent_given_at' => 'datetime',
-            'anonymous_mode' => 'boolean',
             'preferences' => 'array'
         ];
     }
