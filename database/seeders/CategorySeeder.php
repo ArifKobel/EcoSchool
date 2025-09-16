@@ -54,6 +54,13 @@ class CategorySeeder extends Seeder
                 'description' => 'Systematische Entwicklung und Sicherung der Nachhaltigkeitsqualität',
                 'weight' => 1,
                 'question_count' => 10
+            ],
+            [
+                'name' => 'Verbreitung und Sichtbarmachung',
+                'slug' => 'verbreitung-sichtbarmachung',
+                'description' => 'Kommunikation und Sichtbarmachung von Nachhaltigkeitsaktivitäten',
+                'weight' => 1,
+                'question_count' => 9
             ]
         ];
 

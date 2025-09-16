@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Answer;
 use App\Models\Question;
 use App\Models\Result;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -20,24 +21,14 @@ class QuestionnaireController extends Controller
             return redirect()->route('results.show', $user->finalResult);
         }
 
-        $questions = Question::active()->ordered()->get();
+        $categories = $this->getOrderedCategories();
+        $nextCategory = $this->findNextIncompleteCategoryForUser($user, $categories);
 
-        $nextQuestion = $this->getNextUnansweredQuestion($user, $questions);
-
-        if (!$nextQuestion) {
+        if (!$nextCategory) {
             return $this->completeQuestionnaire($user);
         }
 
-        $totalQuestions = $questions->count();
-        $answeredQuestions = $user->answers()->count();
-        $progress = $user->getProgressPercentage();
-
-        return view('questionnaire.show', compact(
-            'nextQuestion',
-            'progress',
-            'totalQuestions',
-            'answeredQuestions'
-        ));
+        return redirect()->route('questionnaire.category.show', $nextCategory);
     }
 
     /** */
@@ -116,6 +107,115 @@ class QuestionnaireController extends Controller
 
         $result = $user->finalResult;
         return redirect()->route('results.show', $result);
+    }
+
+    /** */
+    public function showCategory(Category $category)
+    {
+        $user = Auth::user();
+
+        if ($user->hasCompletedQuestionnaire()) {
+            return redirect()->route('results.show', $user->finalResult);
+        }
+
+        $categories = $this->getOrderedCategories();
+        [$previousCategory, $nextCategory] = $this->getPrevNextCategories($categories, $category);
+
+        $questions = $category->activeQuestions;
+
+        $existingAnswers = $user->answers()
+            ->whereIn('question_id', $questions->pluck('id'))
+            ->get()
+            ->keyBy('question_id');
+
+        $totalQuestions = Question::active()->count();
+        $answeredQuestions = $user->answers()->count();
+        $progress = $user->getProgressPercentage();
+
+        return view('questionnaire.category', compact(
+            'category',
+            'categories',
+            'questions',
+            'existingAnswers',
+            'previousCategory',
+            'nextCategory',
+            'totalQuestions',
+            'answeredQuestions',
+            'progress'
+        ));
+    }
+
+    /** */
+    public function storeCategory(Request $request, Category $category)
+    {
+        $request->validate([
+            'answers' => 'nullable|array',
+            'answers.*' => 'nullable',
+        ]);
+
+        $user = Auth::user();
+
+        DB::transaction(function () use ($request, $user, $category) {
+            $answers = $request->input('answers', []);
+            $questions = $category->activeQuestions;
+
+            foreach ($questions as $question) {
+                if (!array_key_exists((string)$question->id, $answers) && !array_key_exists($question->id, $answers)) {
+                    continue;
+                }
+
+                $value = $answers[$question->id] ?? $answers[(string)$question->id] ?? null;
+                if ($value === null || $value === '') {
+                    continue;
+                }
+
+                $answerBool = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+                if ($answerBool === null) {
+                    continue;
+                }
+
+                $existing = Answer::where('user_id', $user->id)
+                    ->where('question_id', $question->id)
+                    ->first();
+
+                if ($existing) {
+                    $existing->update([
+                        'answer' => $answerBool,
+                        'points_awarded' => $answerBool ? 1 : 0,
+                        'answered_at' => now()
+                    ]);
+                } else {
+                    Answer::create([
+                        'user_id' => $user->id,
+                        'question_id' => $question->id,
+                        'answer' => $answerBool,
+                        'points_awarded' => $answerBool ? 1 : 0,
+                        'answered_at' => now()
+                    ]);
+                }
+            }
+        });
+
+        $totalQuestions = Question::active()->count();
+        $userAnswers = $user->answers()->count();
+
+        if ($userAnswers >= $totalQuestions) {
+            return $this->completeQuestionnaire($user);
+        }
+
+        $categories = $this->getOrderedCategories();
+        [$previousCategory, $nextCategory] = $this->getPrevNextCategories($categories, $category);
+
+        if ($nextCategory) {
+            return redirect()->route('questionnaire.category.show', $nextCategory);
+        }
+
+        $nextIncomplete = $this->findNextIncompleteCategoryForUser($user, $categories);
+        if ($nextIncomplete) {
+            return redirect()->route('questionnaire.category.show', $nextIncomplete);
+        }
+
+        return redirect()->route('questionnaire.show');
     }
 
     /** */
@@ -209,25 +309,16 @@ class QuestionnaireController extends Controller
     /** */
     public function showGuest(Request $request)
     {
-        $questions = Question::active()->ordered()->get();
-
         $guestAnswers = $request->session()->get('guest_answers', []);
-        $nextQuestion = $this->getNextUnansweredQuestionForGuest($guestAnswers, $questions);
 
-        if (!$nextQuestion) {
+        $categories = $this->getOrderedCategories();
+        $nextCategory = $this->findNextIncompleteCategoryForGuest($guestAnswers, $categories);
+
+        if (!$nextCategory) {
             return $this->completeGuestQuestionnaire($request);
         }
 
-        $totalQuestions = $questions->count();
-        $answeredQuestions = count($guestAnswers);
-        $progress = $totalQuestions > 0 ? round(($answeredQuestions / $totalQuestions) * 100, 1) : 0;
-
-        return view('questionnaire.show', compact(
-            'nextQuestion',
-            'progress',
-            'totalQuestions',
-            'answeredQuestions'
-        ))->with('is_guest', true);
+        return redirect()->route('guest.questionnaire.category.show', $nextCategory);
     }
 
     /** */
@@ -255,6 +346,92 @@ class QuestionnaireController extends Controller
 
         if ($answeredQuestions >= $totalQuestions) {
             return $this->completeGuestQuestionnaire($request);
+        }
+
+        return redirect()->route('guest.questionnaire.show');
+    }
+
+    /** */
+    public function showGuestCategory(Request $request, Category $category)
+    {
+        $guestAnswers = $request->session()->get('guest_answers', []);
+
+        $categories = $this->getOrderedCategories();
+        [$previousCategory, $nextCategory] = $this->getPrevNextCategories($categories, $category);
+
+        $questions = $category->activeQuestions;
+
+        $totalQuestions = Question::active()->count();
+        $answeredQuestions = count($guestAnswers);
+        $progress = $totalQuestions > 0 ? round(($answeredQuestions / $totalQuestions) * 100, 1) : 0;
+
+        return view('questionnaire.category', [
+            'category' => $category,
+            'categories' => $categories,
+            'questions' => $questions,
+            'existingAnswers' => collect($guestAnswers),
+            'previousCategory' => $previousCategory,
+            'nextCategory' => $nextCategory,
+            'totalQuestions' => $totalQuestions,
+            'answeredQuestions' => $answeredQuestions,
+            'progress' => $progress,
+            'is_guest' => true,
+        ]);
+    }
+
+    /** */
+    public function storeGuestCategory(Request $request, Category $category)
+    {
+        $request->validate([
+            'answers' => 'nullable|array',
+            'answers.*' => 'nullable',
+        ]);
+
+        $answers = $request->input('answers', []);
+        $guestAnswers = $request->session()->get('guest_answers', []);
+        $questions = $category->activeQuestions;
+
+        foreach ($questions as $question) {
+            if (!array_key_exists((string)$question->id, $answers) && !array_key_exists($question->id, $answers)) {
+                continue;
+            }
+
+            $value = $answers[$question->id] ?? $answers[(string)$question->id] ?? null;
+            if ($value === null || $value === '') {
+                continue;
+            }
+
+            $answerBool = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+            if ($answerBool === null) {
+                continue;
+            }
+
+            $guestAnswers[$question->id] = [
+                'answer' => $answerBool,
+                'points_awarded' => $answerBool ? 1 : 0,
+                'answered_at' => now()->toISOString()
+            ];
+        }
+
+        $request->session()->put('guest_answers', $guestAnswers);
+
+        $totalQuestions = Question::active()->count();
+        $answeredQuestions = count($guestAnswers);
+
+        if ($answeredQuestions >= $totalQuestions) {
+            return $this->completeGuestQuestionnaire($request);
+        }
+
+        $categories = $this->getOrderedCategories();
+        [$previousCategory, $nextCategory] = $this->getPrevNextCategories($categories, $category);
+
+        if ($nextCategory) {
+            return redirect()->route('guest.questionnaire.category.show', $nextCategory);
+        }
+
+        $nextIncomplete = $this->findNextIncompleteCategoryForGuest($guestAnswers, $categories);
+        if ($nextIncomplete) {
+            return redirect()->route('guest.questionnaire.category.show', $nextIncomplete);
         }
 
         return redirect()->route('guest.questionnaire.show');
@@ -343,6 +520,68 @@ class QuestionnaireController extends Controller
             'progress' => $progress,
             'completed' => $answeredQuestions >= $totalQuestions
         ]);
+    }
+
+    /** */
+    private function getOrderedCategories()
+    {
+        return Category::orderBy('weight')->orderBy('id')->get();
+    }
+
+    /** */
+    private function getPrevNextCategories($categories, Category $current)
+    {
+        $previous = null;
+        $next = null;
+
+        foreach ($categories as $index => $cat) {
+            if ($cat->id === $current->id) {
+                $previous = $index > 0 ? $categories[$index - 1] : null;
+                $next = $index < ($categories->count() - 1) ? $categories[$index + 1] : null;
+                break;
+            }
+        }
+
+        return [$previous, $next];
+    }
+
+    /** */
+    private function findNextIncompleteCategoryForUser($user, $categories)
+    {
+        foreach ($categories as $category) {
+            $questionIds = $category->activeQuestions->pluck('id');
+            $total = $questionIds->count();
+            if ($total === 0) {
+                continue;
+            }
+            $answered = $user->answers()->whereIn('question_id', $questionIds)->count();
+            if ($answered < $total) {
+                return $category;
+            }
+        }
+        return null;
+    }
+
+    /** */
+    private function findNextIncompleteCategoryForGuest($guestAnswers, $categories)
+    {
+        foreach ($categories as $category) {
+            $questionIds = $category->activeQuestions->pluck('id');
+            $total = $questionIds->count();
+            if ($total === 0) {
+                continue;
+            }
+            $answered = 0;
+            foreach ($questionIds as $qid) {
+                if (isset($guestAnswers[$qid])) {
+                    $answered++;
+                }
+            }
+            if ($answered < $total) {
+                return $category;
+            }
+        }
+        return null;
     }
 
 }

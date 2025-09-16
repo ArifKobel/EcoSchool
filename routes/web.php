@@ -24,6 +24,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/questionnaire', [QuestionnaireController::class, 'show'])->name('questionnaire.show');
     Route::post('/questionnaire', [QuestionnaireController::class, 'store'])->name('questionnaire.store');
+    // Category-based questionnaire navigation
+    Route::get('/questionnaire/category/{category:slug}', [QuestionnaireController::class, 'showCategory'])
+        ->name('questionnaire.category.show');
+    Route::post('/questionnaire/category/{category:slug}', [QuestionnaireController::class, 'storeCategory'])
+        ->name('questionnaire.category.store');
     Route::post('/questionnaire/reset', [QuestionnaireController::class, 'reset'])->name('questionnaire.reset');
     Route::get('/questionnaire/progress', [QuestionnaireController::class, 'progress'])->name('questionnaire.progress');
 
@@ -33,6 +38,11 @@ Route::middleware('auth')->group(function () {
 Route::middleware('guest.access')->group(function () {
     Route::get('/guest/questionnaire', [QuestionnaireController::class, 'showGuest'])->name('guest.questionnaire.show');
     Route::post('/guest/questionnaire', [QuestionnaireController::class, 'storeGuest'])->name('guest.questionnaire.store');
+    // Category-based guest questionnaire navigation
+    Route::get('/guest/questionnaire/category/{category:slug}', [QuestionnaireController::class, 'showGuestCategory'])
+        ->name('guest.questionnaire.category.show');
+    Route::post('/guest/questionnaire/category/{category:slug}', [QuestionnaireController::class, 'storeGuestCategory'])
+        ->name('guest.questionnaire.category.store');
     Route::post('/guest/questionnaire/reset', [QuestionnaireController::class, 'resetGuest'])->name('guest.questionnaire.reset');
     Route::get('/guest/questionnaire/progress', [QuestionnaireController::class, 'progressGuest'])->name('guest.questionnaire.progress');
     Route::get('/guest/results', [ResultController::class, 'showGuest'])->name('guest.results.show');

@@ -62,7 +62,10 @@ class Question extends Model
      */
     public function scopeOrdered($query)
     {
-        return $query->orderBy('order');
+        return $query->join('categories', 'questions.category_id', '=', 'categories.id')
+                    ->orderBy('categories.weight', 'asc')
+                    ->orderBy('questions.order', 'asc')
+                    ->select('questions.*');
     }
 
     /**
