@@ -25,4 +25,23 @@ return [
     'verify_email_address' => 'E-Mail-Adresse bestätigen',
     'trouble_clicking_button' => 'Falls Sie Schwierigkeiten haben, auf den Button ":actionText" zu klicken, kopieren Sie die folgende URL und fügen Sie sie in Ihren Webbrowser ein:',
 
+    // Profile translations
+    'profile' => 'Profil',
+    'profile_information' => 'Profil-Informationen',
+    'update_profile_info' => 'Aktualisieren Sie die Profil-Informationen und E-Mail-Adresse Ihres Kontos.',
+    'name' => 'Name',
+    'email' => 'E-Mail',
+    'save' => 'Speichern',
+    'update_password' => 'Passwort aktualisieren',
+    'password_security' => 'Stellen Sie sicher, dass Ihr Konto ein langes, zufälliges Passwort verwendet, um sicher zu bleiben.',
+    'current_password' => 'Aktuelles Passwort',
+    'new_password' => 'Neues Passwort',
+    'confirm_password' => 'Passwort bestätigen',
+    'delete_account' => 'Konto löschen',
+    'delete_account_warning' => 'Sobald Ihr Konto gelöscht wurde, werden alle Ressourcen und Daten dauerhaft gelöscht. Laden Sie vor dem Löschen Ihres Kontos alle Daten oder Informationen herunter, die Sie behalten möchten.',
+    'are_you_sure_delete_account' => 'Sind Sie sicher, dass Sie Ihr Konto löschen möchten?',
+    'delete_account_confirmation' => 'Sobald Ihr Konto gelöscht wurde, werden alle Ressourcen und Daten dauerhaft gelöscht. Bitte geben Sie Ihr Passwort ein, um zu bestätigen, dass Sie Ihr Konto dauerhaft löschen möchten.',
+    'password' => 'Passwort',
+    'cancel' => 'Abbrechen',
+
 ];
