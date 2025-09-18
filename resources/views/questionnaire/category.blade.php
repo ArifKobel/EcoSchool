@@ -46,6 +46,10 @@
                                 window.location.href = url;
                             }
                         }
+
+                        function confirmTestCompletion() {
+                            return confirm('Sind Sie sicher, dass Sie den Fragebogen abschließen möchten?\n\nNach dem Abschluss können Sie Ihre Antworten nicht mehr ändern und die Ergebnisse werden angezeigt.');
+                        }
                     </script>
 
                     <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
@@ -110,9 +114,9 @@
                                         Speichern & Weiter
                                     </button>
                                 @else
-                                    <button type="submit"
+                                    <button type="submit" onclick="return confirmTestCompletion()"
                                             class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                        Speichern & Abschließen
+                                        Fragebogen abschließen & Ergebnisse anzeigen
                                     </button>
                                 @endif
                             </div>

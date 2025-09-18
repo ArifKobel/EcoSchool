@@ -129,7 +129,7 @@ class QuestionnaireController extends Controller
             ->keyBy('question_id');
 
         $totalQuestions = Question::active()->count();
-        $answeredQuestions = $user->answers()->count();
+        $answeredQuestions = $user->answers()->distinct('question_id')->count();
         $progress = $user->getProgressPercentage();
 
         return view('questionnaire.category', compact(
@@ -196,23 +196,26 @@ class QuestionnaireController extends Controller
             }
         });
 
+        $categories = $this->getOrderedCategories();
+        [$previousCategory, $nextCategory] = $this->getPrevNextCategories($categories, $category);
+
+        // Check if current category is complete and there are more categories
+        if ($nextCategory) {
+            return redirect()->route('questionnaire.category.show', $nextCategory);
+        }
+
+        // Check for any incomplete categories
+        $nextIncomplete = $this->findNextIncompleteCategoryForUser($user, $categories);
+        if ($nextIncomplete) {
+            return redirect()->route('questionnaire.category.show', $nextIncomplete);
+        }
+
+        // Only complete questionnaire if ALL questions are answered
         $totalQuestions = Question::active()->count();
         $userAnswers = $user->answers()->count();
 
         if ($userAnswers >= $totalQuestions) {
             return $this->completeQuestionnaire($user);
-        }
-
-        $categories = $this->getOrderedCategories();
-        [$previousCategory, $nextCategory] = $this->getPrevNextCategories($categories, $category);
-
-        if ($nextCategory) {
-            return redirect()->route('questionnaire.category.show', $nextCategory);
-        }
-
-        $nextIncomplete = $this->findNextIncompleteCategoryForUser($user, $categories);
-        if ($nextIncomplete) {
-            return redirect()->route('questionnaire.category.show', $nextIncomplete);
         }
 
         return redirect()->route('questionnaire.show');
@@ -415,23 +418,26 @@ class QuestionnaireController extends Controller
 
         $request->session()->put('guest_answers', $guestAnswers);
 
+        $categories = $this->getOrderedCategories();
+        [$previousCategory, $nextCategory] = $this->getPrevNextCategories($categories, $category);
+
+        // Check if current category is complete and there are more categories
+        if ($nextCategory) {
+            return redirect()->route('guest.questionnaire.category.show', $nextCategory);
+        }
+
+        // Check for any incomplete categories
+        $nextIncomplete = $this->findNextIncompleteCategoryForGuest($guestAnswers, $categories);
+        if ($nextIncomplete) {
+            return redirect()->route('guest.questionnaire.category.show', $nextIncomplete);
+        }
+
+        // Only complete questionnaire if ALL questions are answered
         $totalQuestions = Question::active()->count();
         $answeredQuestions = count($guestAnswers);
 
         if ($answeredQuestions >= $totalQuestions) {
             return $this->completeGuestQuestionnaire($request);
-        }
-
-        $categories = $this->getOrderedCategories();
-        [$previousCategory, $nextCategory] = $this->getPrevNextCategories($categories, $category);
-
-        if ($nextCategory) {
-            return redirect()->route('guest.questionnaire.category.show', $nextCategory);
-        }
-
-        $nextIncomplete = $this->findNextIncompleteCategoryForGuest($guestAnswers, $categories);
-        if ($nextIncomplete) {
-            return redirect()->route('guest.questionnaire.category.show', $nextIncomplete);
         }
 
         return redirect()->route('guest.questionnaire.show');

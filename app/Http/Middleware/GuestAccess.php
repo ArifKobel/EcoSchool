@@ -23,6 +23,8 @@ class GuestAccess
         $allowedRoutes = [
             'guest.questionnaire.show',
             'guest.questionnaire.store',
+            'guest.questionnaire.category.show',
+            'guest.questionnaire.category.store',
             'guest.questionnaire.reset',
             'guest.questionnaire.progress',
             'guest.results.show'

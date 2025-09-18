@@ -102,7 +102,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getProgressPercentage(): float
     {
         $totalQuestions = Question::active()->count();
-        $answeredQuestions = $this->answers()->count();
+        $answeredQuestions = $this->answers()->distinct('question_id')->count();
 
         if ($totalQuestions === 0) {
             return 0;

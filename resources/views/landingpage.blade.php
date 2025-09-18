@@ -70,7 +70,7 @@
                             <span class="text-xs text-black/60 dark:text-white/70">BBNE für Schulen – praxisnah</span>
                         </div>
                         <h1 class="mt-4 text-3xl md:text-5xl font-semibold tracking-tight leading-tight">
-                            BBNE‑Selbsteinschätzung – schnell, verständlich, wirkungsvoll.
+                            BBNE Selbsteinschätzung
                         </h1>
                         <p class="mt-4 text-base md:text-lg text-black/70 dark:text-white/70 max-w-2xl">
                             Erfassen Sie den Status Ihrer Schule in der Berufsbildung für nachhaltige Entwicklung, erhalten Sie eine klare Einstufung (Bronze/Silber/Gold) und erkennen Sie, wo Sie gezielt nachbessern können.
