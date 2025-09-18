@@ -25,41 +25,26 @@ class Question extends Model
         'metadata' => 'array'
     ];
 
-    /**
-     * Get the category that owns this question.
-     */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    /**
-     * Get the answers for this question.
-     */
     public function answers(): HasMany
     {
         return $this->hasMany(Answer::class);
     }
 
-    /**
-     * Get answers from a specific user.
-     */
     public function userAnswer(User $user): ?Answer
     {
         return $this->answers()->where('user_id', $user->id)->first();
     }
 
-    /**
-     * Scope for active questions.
-     */
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
     }
 
-    /**
-     * Scope for ordering questions.
-     */
     public function scopeOrdered($query)
     {
         return $query->join('categories', 'questions.category_id', '=', 'categories.id')
@@ -68,9 +53,6 @@ class Question extends Model
                     ->select('questions.*');
     }
 
-    /**
-     * Boot the model.
-     */
     protected static function boot()
     {
         parent::boot();
@@ -88,9 +70,6 @@ class Question extends Model
         });
     }
 
-    /**
-     * Reorder questions after deletion.
-     */
     protected static function reorderAfterDeletion($categoryId)
     {
         $questions = static::where('category_id', $categoryId)
@@ -102,9 +81,6 @@ class Question extends Model
         }
     }
 
-    /**
-     * Move question up in order.
-     */
     public function moveOrderUp()
     {
         $previousQuestion = static::where('category_id', $this->category_id)
@@ -119,9 +95,6 @@ class Question extends Model
         }
     }
 
-    /**
-     * Move question down in order.
-     */
     public function moveOrderDown()
     {
         $nextQuestion = static::where('category_id', $this->category_id)

@@ -27,17 +27,11 @@ class Result extends Model
         'is_final' => 'boolean'
     ];
 
-    /**
-     * Get the user that owns this result.
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Calculate status based on total points.
-     */
     public static function calculateStatus(int $percentage): string
     {
         if ($percentage >= 91) {
@@ -49,9 +43,6 @@ class Result extends Model
         }
     }
 
-    /**
-     * Get the status badge color.
-     */
     public function getStatusColor(): string
     {
         return match($this->status) {
@@ -62,9 +53,6 @@ class Result extends Model
         };
     }
 
-    /**
-     * Get status display name.
-     */
     public function getStatusName(): string
     {
         return match($this->status) {
@@ -75,17 +63,11 @@ class Result extends Model
         };
     }
 
-    /**
-     * Scope for final results.
-     */
     public function scopeFinal($query)
     {
         return $query->where('is_final', true);
     }
 
-    /**
-     * Scope for results by status.
-     */
     public function scopeByStatus($query, string $status)
     {
         return $query->where('status', $status);

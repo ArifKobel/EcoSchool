@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('question_id')->constrained()->onDelete('cascade');
-            $table->boolean('answer'); // true = Ja, false = Nein
-            $table->integer('points_awarded')->default(0); // Vergebene Punkte
-            $table->timestamp('answered_at'); // Wann wurde geantwortet
+            $table->boolean('answer');
+            $table->integer('points_awarded')->default(0);
+            $table->timestamp('answered_at');
             $table->timestamps();
 
-            $table->unique(['user_id', 'question_id']); // Ein User kann eine Frage nur einmal beantworten
+            $table->unique(['user_id', 'question_id']);
             $table->index(['user_id', 'answered_at']);
         });
     }

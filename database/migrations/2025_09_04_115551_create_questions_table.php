@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
-            $table->text('question_text'); // Der eigentliche Fragetext
-            $table->integer('order')->default(0); // Reihenfolge der Fragen
-            $table->boolean('is_active')->default(true); // Aktiv/Inaktiv
-            $table->integer('points')->default(1); // Punkte für Ja-Antwort
-            $table->text('help_text')->nullable(); // Hilfstext für die Frage
-            $table->json('metadata')->nullable(); // Zusätzliche Metadaten
+            $table->text('question_text');
+            $table->integer('order')->default(0);
+            $table->boolean('is_active')->default(true);
+            $table->integer('points')->default(1);
+            $table->text('help_text')->nullable();
+            $table->json('metadata')->nullable();
             $table->timestamps();
 
             $table->index(['category_id', 'order']);

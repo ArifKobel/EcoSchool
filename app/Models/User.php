@@ -13,8 +13,6 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
-     *
      * @var list<string>
      */
     protected $fillable = [
@@ -31,8 +29,6 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
      * @var list<string>
      */
     protected $hidden = [
@@ -41,8 +37,6 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
      * @return array<string, string>
      */
     protected function casts(): array
@@ -56,49 +50,31 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-    /**
-     * Get the answers for this user.
-     */
     public function answers()
     {
         return $this->hasMany(Answer::class);
     }
 
-    /**
-     * Get the results for this user.
-     */
     public function results()
     {
         return $this->hasMany(Result::class);
     }
 
-    /**
-     * Get the latest result for this user.
-     */
     public function latestResult()
     {
         return $this->hasOne(Result::class)->latestOfMany();
     }
 
-    /**
-     * Get the final result for this user.
-     */
     public function finalResult()
     {
         return $this->hasOne(Result::class)->where('is_final', true);
     }
 
-    /**
-     * Check if user has completed the questionnaire.
-     */
     public function hasCompletedQuestionnaire(): bool
     {
         return $this->finalResult()->exists();
     }
 
-    /**
-     * Get progress percentage for this user.
-     */
     public function getProgressPercentage(): float
     {
         $totalQuestions = Question::active()->count();

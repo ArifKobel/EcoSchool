@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\DB;
 
 class QuestionnaireController extends Controller
 {
-    /** */
     public function show(Request $request)
     {
         $user = Auth::user();
@@ -31,7 +30,6 @@ class QuestionnaireController extends Controller
         return redirect()->route('questionnaire.category.show', $nextCategory);
     }
 
-    /** */
     public function store(Request $request)
     {
         $request->validate([
@@ -75,7 +73,6 @@ class QuestionnaireController extends Controller
         return redirect()->route('questionnaire.show');
     }
 
-    /** */
     private function completeQuestionnaire($user)
     {
         DB::transaction(function () use ($user) {
@@ -109,7 +106,6 @@ class QuestionnaireController extends Controller
         return redirect()->route('results.show', $result);
     }
 
-    /** */
     public function showCategory(Category $category)
     {
         $user = Auth::user();
@@ -145,7 +141,6 @@ class QuestionnaireController extends Controller
         ));
     }
 
-    /** */
     public function storeCategory(Request $request, Category $category)
     {
         $request->validate([
@@ -199,18 +194,15 @@ class QuestionnaireController extends Controller
         $categories = $this->getOrderedCategories();
         [$previousCategory, $nextCategory] = $this->getPrevNextCategories($categories, $category);
 
-        // Check if current category is complete and there are more categories
         if ($nextCategory) {
             return redirect()->route('questionnaire.category.show', $nextCategory);
         }
 
-        // Check for any incomplete categories
         $nextIncomplete = $this->findNextIncompleteCategoryForUser($user, $categories);
         if ($nextIncomplete) {
             return redirect()->route('questionnaire.category.show', $nextIncomplete);
         }
 
-        // Only complete questionnaire if ALL questions are answered
         $totalQuestions = Question::active()->count();
         $userAnswers = $user->answers()->count();
 
@@ -221,11 +213,10 @@ class QuestionnaireController extends Controller
         return redirect()->route('questionnaire.show');
     }
 
-    /** */
     private function calculateCategoryScores($user)
     {
         $scores = [];
-        $categories = \App\Models\Category::all();
+        $categories = Category::all();
 
         foreach ($categories as $category) {
             $categoryQuestions = $category->activeQuestions;
@@ -248,7 +239,6 @@ class QuestionnaireController extends Controller
         return $scores;
     }
 
-    /** */
     private function getNextUnansweredQuestion($user, $questions)
     {
         foreach ($questions as $question) {
@@ -261,7 +251,6 @@ class QuestionnaireController extends Controller
         return null;
     }
 
-    /** */
     public function progress()
     {
         $user = Auth::user();
@@ -273,7 +262,6 @@ class QuestionnaireController extends Controller
         ]);
     }
 
-    /** */
     public function reset(Request $request)
     {
         $user = Auth::user();
@@ -289,7 +277,6 @@ class QuestionnaireController extends Controller
         return redirect()->route('questionnaire.show')->with('success', 'Fragebogen wurde zurückgesetzt. Sie können ihn nun erneut durchführen.');
     }
 
-    /** */
     public function resetGuest(Request $request)
     {
         if ($request->has('debug')) {
@@ -309,7 +296,6 @@ class QuestionnaireController extends Controller
         return redirect()->route('guest.questionnaire.show')->with('success', 'Fragebogen wurde zurückgesetzt. Sie können ihn nun erneut durchführen.');
     }
 
-    /** */
     public function showGuest(Request $request)
     {
         $guestAnswers = $request->session()->get('guest_answers', []);
@@ -324,7 +310,6 @@ class QuestionnaireController extends Controller
         return redirect()->route('guest.questionnaire.category.show', $nextCategory);
     }
 
-    /** */
     public function storeGuest(Request $request)
     {
         $request->validate([
@@ -354,7 +339,6 @@ class QuestionnaireController extends Controller
         return redirect()->route('guest.questionnaire.show');
     }
 
-    /** */
     public function showGuestCategory(Request $request, Category $category)
     {
         $guestAnswers = $request->session()->get('guest_answers', []);
@@ -382,7 +366,6 @@ class QuestionnaireController extends Controller
         ]);
     }
 
-    /** */
     public function storeGuestCategory(Request $request, Category $category)
     {
         $request->validate([
@@ -421,18 +404,15 @@ class QuestionnaireController extends Controller
         $categories = $this->getOrderedCategories();
         [$previousCategory, $nextCategory] = $this->getPrevNextCategories($categories, $category);
 
-        // Check if current category is complete and there are more categories
         if ($nextCategory) {
             return redirect()->route('guest.questionnaire.category.show', $nextCategory);
         }
 
-        // Check for any incomplete categories
         $nextIncomplete = $this->findNextIncompleteCategoryForGuest($guestAnswers, $categories);
         if ($nextIncomplete) {
             return redirect()->route('guest.questionnaire.category.show', $nextIncomplete);
         }
 
-        // Only complete questionnaire if ALL questions are answered
         $totalQuestions = Question::active()->count();
         $answeredQuestions = count($guestAnswers);
 
@@ -443,7 +423,6 @@ class QuestionnaireController extends Controller
         return redirect()->route('guest.questionnaire.show');
     }
 
-    /** */
     private function completeGuestQuestionnaire(Request $request)
     {
         $guestAnswers = $request->session()->get('guest_answers', []);
@@ -474,7 +453,6 @@ class QuestionnaireController extends Controller
         return redirect()->route('guest.results.show');
     }
 
-    /** */
     private function calculateGuestCategoryScores($guestAnswers)
     {
         $scores = [];
@@ -502,7 +480,6 @@ class QuestionnaireController extends Controller
         return $scores;
     }
 
-    /** */
     private function getNextUnansweredQuestionForGuest($guestAnswers, $questions)
     {
         foreach ($questions as $question) {
@@ -514,7 +491,6 @@ class QuestionnaireController extends Controller
         return null;
     }
 
-    /** */
     public function progressGuest(Request $request)
     {
         $guestAnswers = $request->session()->get('guest_answers', []);
@@ -528,13 +504,11 @@ class QuestionnaireController extends Controller
         ]);
     }
 
-    /** */
     private function getOrderedCategories()
     {
         return Category::orderBy('weight')->orderBy('id')->get();
     }
 
-    /** */
     private function getPrevNextCategories($categories, Category $current)
     {
         $previous = null;
@@ -551,7 +525,6 @@ class QuestionnaireController extends Controller
         return [$previous, $next];
     }
 
-    /** */
     private function findNextIncompleteCategoryForUser($user, $categories)
     {
         foreach ($categories as $category) {
@@ -568,7 +541,6 @@ class QuestionnaireController extends Controller
         return null;
     }
 
-    /** */
     private function findNextIncompleteCategoryForGuest($guestAnswers, $categories)
     {
         foreach ($categories as $category) {

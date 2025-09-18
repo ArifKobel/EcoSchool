@@ -20,17 +20,11 @@ class Category extends Model
         'question_count' => 'integer'
     ];
 
-    /**
-     * Get the questions for this category.
-     */
     public function questions(): HasMany
     {
         return $this->hasMany(Question::class)->orderBy('order');
     }
 
-    /**
-     * Get only active questions for this category.
-     */
     public function activeQuestions(): HasMany
     {
         return $this->hasMany(Question::class)->where('is_active', true)->orderBy('order');
