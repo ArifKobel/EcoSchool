@@ -37,13 +37,13 @@
                                 <a href="#features" class="hidden md:inline-block px-4 py-2 text-sm rounded-md border border-black/10 dark:border-white/15 hover:border-black/20 dark:hover:border-white/25">Funktionen</a>
                                 @auth
                                     <a href="{{ url('/dashboard') }}" class="inline-flex items-center gap-2 rounded-md bg-emerald-600 text-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-400/70">
-                                        Zum Dashboard
+                                        Zum Dashboard (To Dashboard)
                                     </a>
                                 @else
                                     <a href="{{ route('login') }}" class="px-4 py-2 text-sm rounded-md border border-transparent hover:border-black/10 dark:hover:border-white/15">Anmelden</a>
                                     @if (Route::has('register'))
                                         <a href="{{ route('register') }}" class="inline-flex items-center gap-2 rounded-md bg-gradient-to-tr from-emerald-600 to-lime-500 text-white px-4 py-2 text-sm font-medium shadow-sm hover:from-emerald-700 hover:to-lime-600 focus:outline-none focus:ring-2 focus:ring-emerald-400/70">
-                                            Jetzt starten
+                                            Jetzt starten (Start Now)
                                         </a>
                                     @endif
                                 @endauth

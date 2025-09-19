@@ -36,7 +36,7 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <h2 class="text-xl font-semibold text-gray-900">
-                                    Ihr Fragebogen-Status
+                                    Ihr Fragebogen-Status. (Your Questionnaire Status)
                                 </h2>
                                 <p class="mt-1 text-sm text-gray-500">
                                     Arbeiten Sie den Fragebogen durch, um Ihre Ergebnisse zu erhalten
@@ -44,7 +44,7 @@
                             </div>
                             <div class="text-right">
                                 <div class="text-2xl font-bold text-gray-900">{{ $progress }}%</div>
-                                <div class="text-sm text-gray-500">abgeschlossen</div>
+                                <div class="text-sm text-gray-500">abgeschlossen (completed)</div>
                             </div>
                         </div>
 
@@ -58,7 +58,7 @@
                             <a href="{{ route('questionnaire.show') }}"
                                class="inline-flex items-center justify-center px-6 py-3 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                 @if($progress > 0)
-                                    Fragebogen fortsetzen
+                                    Fragebogen fortsetzen (Continue Questionnaire)
                                 @else
                                     Fragebogen starten
                                 @endif
